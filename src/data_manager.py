@@ -2,9 +2,14 @@ from pathlib import Path
 from random import *
 from cryptography.fernet import Fernet
 import json
+import sys
 # ---------------------------- CODE GENERATOR PASSWORD ------------------------------- #
-ROOT = Path(__file__).parent.parent
-KEY_FILE =ROOT / "key.key"
+if getattr(sys, 'frozen', False):
+    DATA_DIR = Path(sys.executable).parent   # key.key junto al .exe
+else:
+    DATA_DIR = Path(__file__).parent.parent
+
+KEY_FILE = DATA_DIR / "key.key"
 
 if KEY_FILE.exists():
     key = KEY_FILE.read_bytes()

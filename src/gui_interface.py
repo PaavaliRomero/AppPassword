@@ -2,11 +2,17 @@ from pathlib import Path
 import tkinter as tk
 from tkinter import messagebox
 from data_manager import Generate_random_password, Encrypted_Message, Decrypted_Message
+import sys
 
-BASE_DIR = Path(__file__).parent.parent
+if getattr(sys, 'frozen', False):
+    ASSETS_DIR = Path(sys._MEIPASS)          
+    DATA_DIR = Path(sys.executable).parent
+else:
+    ASSETS_DIR = Path(__file__).parent.parent
+    DATA_DIR = ASSETS_DIR
 
-FILE_LOGO = BASE_DIR/"Image"/"logo.png"
-FILE_DATA = BASE_DIR/"data"/"data.json"
+FILE_LOGO = ASSETS_DIR / "Image" / "logo.png"
+FILE_DATA = DATA_DIR / "data" / "data.json"
 EMAIL_DEFAULT = 'email@domain.com'
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -148,6 +154,7 @@ class myWindowAppPass:
                     data = Decrypted_Message(FileData.read())
             except FileNotFoundError:
                 #if data file does't exist
+                (DATA_DIR / "data").mkdir(parents=True, exist_ok=True)
                 with open(FILE_DATA,'wb') as FileData:
                     FileData.write(Encrypted_Message(new_data))
                     

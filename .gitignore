@@ -4,3 +4,4 @@ key.key
 dist/
 build/
 *.spec
+data/data.json
