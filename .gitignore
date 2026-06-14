@@ -1,0 +1,6 @@
+*.pyc
+__pycache__/
+key.key
+dist/
+build/
+*.spec
